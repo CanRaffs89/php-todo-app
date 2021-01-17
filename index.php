@@ -6,10 +6,10 @@ include ('config/db_connect.php');
 // Select items from todos
 $sql = 'SELECT todo, id FROM todos';
 
-// // Send query to the database
+// Send query to the database
 $result = mysqli_query($connect, $sql);
 
-// // Fetch the data from the result variable and return it as an associative array
+// Fetch the data from the result variable and return it as an associative array
 $todos = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // Free the result from memory
@@ -31,15 +31,28 @@ mysqli_close($connect);
                 <div class="card z-depth-3 card-wrapper">
                     <div class="card-content">
                         <ul class="collection with-header">
-                            <li class="collection-header center"><h4 class="heading">To-Do List</h4><a href="add.php" class="add-icon"><i id="add-icon" class="material-icons">add_circle</i></a></li>
+                            <li class="collection-header center">
+                                <h4 class="heading">To-Do List</h4>
+                                <a href="add.php" class="add-icon">
+                                    <i id="add-icon" class="material-icons">add_circle</i>
+                                </a>
+                            </li>
                             
                             <!-- Cycle throught the Todos array and output each as a list item -->
                             <?php foreach($todos as $todo){ ?>
                             
-                                <li class="collection-item"><h6 class="list-item"><?php echo htmlspecialchars($todo['todo']); ?><a href="#!" class="secondary-content"><i class="material-icons">cancel</i></a></h6></li>
+                                <li class="collection-item">
+                                    <h6 class="list-item">
+                                        <span class="hide"><?php echo htmlspecialchars($todo['id']); ?></span>  
+                                        <?php echo htmlspecialchars($todo['todo']); ?>
+                                        <a href="delete.php?id=<?php echo $todo['id']; ?>" class="secondary-content">
+                                            <i class="material-icons">cancel</i>
+                                        </a>
+                                    </h6>
                                 </li>
 
                             <?php } ?>
+
                         </ul>
                     </div>
                 </div>
